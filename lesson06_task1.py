@@ -6,7 +6,6 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 def ajax_button_click():
-    # Настройка ChromeDriver
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
     
@@ -32,4 +31,5 @@ def ajax_button_click():
         driver.quit()
 
 if __name__ == "__main__":
+
     ajax_button_click()
