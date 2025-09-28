@@ -14,6 +14,7 @@ engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
+
 class Student(Base):
     __tablename__ = 'student'
 
@@ -21,4 +22,3 @@ class Student(Base):
     level = Column(String)
     education_form = Column(String)
     subject_id = Column(Integer)
-  
