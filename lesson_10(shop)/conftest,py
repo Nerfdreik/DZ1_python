@@ -1,0 +1,42 @@
+import pytest
+import allure
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from typing import Generator
+from selenium.webdriver.remote.webdriver import WebDriver
+
+
+@pytest.fixture(scope="function")
+def browser() -> Generator[WebDriver, None, None]:
+    """
+    Фикстура для создания и закрытия браузера.
+    
+    Returns:
+        Generator[WebDriver, None, None]: Генератор, возвращающий экземпляр WebDriver
+    """
+    with allure.step("Инициализация браузера Chrome"):
+        service = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service)
+        driver.maximize_window()
+        driver.implicitly_wait(10)
+    
+    yield driver
+    
+    with allure.step("Закрытие браузера"):
+        driver.quit()
+
+
+@pytest.fixture
+def login_page(browser: WebDriver) -> 'LoginPage':
+    """
+    Фикстура для страницы логина.
+    
+    Args:
+        browser (WebDriver): Экземпляр браузера
+        
+    Returns:
+        LoginPage: Экземпляр страницы логина
+    """
+    from pages.login_page import LoginPage
+    return LoginPage(browser)
